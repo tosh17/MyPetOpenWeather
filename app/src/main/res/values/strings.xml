@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyPetOpenWeather</string>
+    <string name="feel_like">Ощущается %sС°</string>
+    <string name="temperature">%sС°</string>
 </resources>
