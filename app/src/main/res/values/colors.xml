@@ -7,6 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="cold">#00248C</color>
+    <color name="cold">#1A237E</color>
+    <color name="cool">#2196F3</color>
+    <color name="warm">#66F600</color>
     <color name="hot">#F60000</color>
+    <color name="btn_action">#304FFE</color>
+    <color name="btn_text">#FFFFFFFF</color>
 </resources>

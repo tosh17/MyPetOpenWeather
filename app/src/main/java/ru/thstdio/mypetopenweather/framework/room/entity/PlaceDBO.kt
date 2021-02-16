@@ -1,12 +1,12 @@
-package ru.thstdio.mypetopenweather.framework.bd.entity
+package ru.thstdio.mypetopenweather.framework.room.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.thstdio.mypetopenweather.framework.bd.AppDbContract
+import ru.thstdio.mypetopenweather.framework.room.AppDbContract
 
 @Entity(tableName = AppDbContract.PlaceEntity.TABLE_NAME)
-data class PlaceEntity(
+data class PlaceDBO(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = AppDbContract.PlaceEntity.COLUMN_NAME_ID)
     val id: Long,

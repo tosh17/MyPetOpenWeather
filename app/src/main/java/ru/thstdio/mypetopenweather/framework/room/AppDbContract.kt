@@ -1,4 +1,4 @@
-package ru.thstdio.mypetopenweather.framework.bd
+package ru.thstdio.mypetopenweather.framework.room
 
 object AppDbContract {
     const val DATABASE_NAME = "app_db.db"

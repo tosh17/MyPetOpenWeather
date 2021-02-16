@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CloudsResponse(
-    @SerialName("all") val all: Int
+    @SerialName("all") val сloudiness: Int
 )

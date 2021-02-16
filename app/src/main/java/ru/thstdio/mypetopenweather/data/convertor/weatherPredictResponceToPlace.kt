@@ -1,10 +1,10 @@
 package ru.thstdio.mypetopenweather.data.convertor
 
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
-import ru.thstdio.mypetopenweather.framework.bd.entity.PlaceEntity
+import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
 
-fun WeatherPredictResponse.toPlace(): PlaceEntity =
-    PlaceEntity(
+fun WeatherPredictResponse.toPlace(): PlaceDBO =
+    PlaceDBO(
         id = this.id,
         name = this.name,
         longitude = this.coord.lon,

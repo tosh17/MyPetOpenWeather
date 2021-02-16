@@ -1,4 +1,4 @@
-package ru.thstdio.mypetopenweather.usecase
+package ru.thstdio.mypetopenweather.usecase.repository
 
 import ru.thstdio.mypetopenweather.data.Repository
 import ru.thstdio.mypetopenweather.domain.Place

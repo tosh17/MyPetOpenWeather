@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toStartOf="@+id/temperature_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/city_value"
-        app:srcCompat="@drawable/na" />
+        app:srcCompat="@drawable/ic_weather_na" />
 
     <TextView
         android:id="@+id/temperature_value"
@@ -50,18 +50,59 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="temperature_value,weather_icon" />
+
     <TextView
         android:id="@+id/feels_like"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:textAlignment="center"
         android:textSize="18sp"
-
-        app:layout_constraintBottom_toBottomOf="@+id/weather_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/barrier"
         tools:text="@string/feel_like" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_to_detail"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:text="Детально"
+        android:textAllCaps="false"
+        android:textColor="@color/btn_action"
+        android:textSize="16sp"
+
+        app:cornerRadius="24dp"
+        app:elevation="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_to_map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_to_map" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_to_map"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:padding="8dp"
+        android:text="На Карту"
+        android:textAllCaps="false"
+        android:textColor="@color/btn_action"
+        android:textSize="16sp"
+
+        app:cornerRadius="16dp"
+        app:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_to_detail"
+        app:layout_constraintTop_toBottomOf="@+id/feels_like" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
