@@ -1,11 +1,13 @@
 package ru.thstdio.mypetopenweather.domain
 
 data class Weather(
-    val temperature: Double,
-    val feelsLike: Double,
-    val iconId:Int,
-    val tempMin: Double,
-    val tempMax: Double,
+    val temperature: Int,
+    val feelsLike: Int,
+    val iconId: Int,
+    val tempMin: Int,
+    val tempMax: Int,
     val pressure: Int,
-    val humidity: Int
+    val humidity: Int,
+    val windSpeed: Double,
+    val wendDeg: Int
 )

@@ -1,7 +1,10 @@
 package ru.thstdio.mypetopenweather.presentation.city
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
@@ -42,7 +45,7 @@ class CityViewModel @Inject constructor(private val useCase: CityUseCase) : View
                 Log.e("SearchCityViewModel", "${placesFromBd.size}")
                 _places.value = placesFromBd
                 if (weatherCard.value == null && placesFromBd.isNotEmpty()) {
-                    updateWeatherCardForPlace(placesFromBd.first().first,false)
+                    updateWeatherCardForPlace(placesFromBd.first().first, false)
                 }
             }
         }
@@ -62,10 +65,11 @@ class CityViewModel @Inject constructor(private val useCase: CityUseCase) : View
     }
 
     override fun onClickPlace(place: Place) {
+        viewModelScope.launch(exceptionHandler) { useCase.setPlaceToTop(place) }
         updateWeatherCardForPlace(place)
     }
 
-    private fun updateWeatherCardForPlace(place: Place,withAnim:Boolean=true) {
+    private fun updateWeatherCardForPlace(place: Place, withAnim: Boolean = true) {
         viewModelScope.launch(exceptionHandler) {
             weatherCardWithAnimation = withAnim
             _weatherCard.value = place to useCase.getWeatherByPlace(place)
@@ -102,6 +106,11 @@ class CityViewModel @Inject constructor(private val useCase: CityUseCase) : View
 
     fun onClickToMap() {
         weatherCard.value?.let { (place, _) -> useCase.navigateToMap(place) }
+        weatherCardWithAnimation = false
+    }
+
+    fun onClickToDetail() {
+        weatherCard.value?.let { (place, _) -> useCase.navigateToDetail(place) }
         weatherCardWithAnimation = false
     }
 

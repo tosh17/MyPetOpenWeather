@@ -6,11 +6,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import ru.thstdio.mypetopenweather.R
 
-private const val COLD_TEMPERATURE = -20F
-private const val COOL_TEMPERATURE = 0F
-private const val WARM_TEMPERATURE = 15F
-private const val HOT_TEMPERATURE = 30F
-fun calcWeatherColor(temperature: Double, context: Context): Int {
+private const val COLD_TEMPERATURE = -20
+private const val COOL_TEMPERATURE = 0
+private const val WARM_TEMPERATURE = 15
+private const val HOT_TEMPERATURE = 30
+fun calcWeatherColor(temperature: Int, context: Context): Int {
     val coldColor = ContextCompat.getColor(context, R.color.cold)
     val coolColor = ContextCompat.getColor(context, R.color.cool)
     val warmColor = ContextCompat.getColor(context, R.color.warm)
@@ -35,13 +35,13 @@ fun calcWeatherColor(temperature: Double, context: Context): Int {
 }
 
 private fun getColor(
-    minTemp: Float,
-    maxTemp: Float,
-    currentTemp: Double,
+    minTemp: Int,
+    maxTemp: Int,
+    currentTemp: Int,
     @ColorInt minColor: Int,
     @ColorInt maxColor: Int
 ): Int {
     val range =
-        ((currentTemp - minTemp) / (maxTemp - minTemp)).toFloat()
+        (currentTemp - minTemp).toFloat() / (maxTemp - minTemp)
     return ColorUtils.blendARGB(minColor, maxColor, range)
 }

@@ -1,10 +1,8 @@
 package ru.thstdio.mypetopenweather.presentation.city
 
 import ru.thstdio.mypetopenweather.usecase.navigation.NavigateToMap
-import ru.thstdio.mypetopenweather.usecase.repository.GetPlaces
-import ru.thstdio.mypetopenweather.usecase.repository.GetWeatherPredictForCity
-import ru.thstdio.mypetopenweather.usecase.repository.GetWeatherPredictForCoordinate
-import ru.thstdio.mypetopenweather.usecase.repository.GetWeatherPredictForPlace
+import ru.thstdio.mypetopenweather.usecase.navigation.NavigationToDetail
+import ru.thstdio.mypetopenweather.usecase.repository.*
 import javax.inject.Inject
 
 class CityUseCase @Inject constructor(
@@ -12,5 +10,7 @@ class CityUseCase @Inject constructor(
     val getWeatherByPlace: GetWeatherPredictForPlace,
     val getWeatherByCoordinate: GetWeatherPredictForCoordinate,
     val getPlaces: GetPlaces,
-    val navigateToMap : NavigateToMap
+    val setPlaceToTop: SetPlaceToTop,
+    val navigateToMap: NavigateToMap,
+    val navigateToDetail: NavigationToDetail
 )

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_title">48sp</dimen>
+    <dimen name="text_subtitle">24sp</dimen>
+    <dimen name="text_body">16sp</dimen>
+    <dimen name="text_body2">14sp</dimen>
+
+    <dimen name="icon_weather_big">128sp</dimen>
+    <dimen name="icon_weather_medium">128dp</dimen>
+    <dimen name="icon_weather_small">24sp</dimen>
+</resources>

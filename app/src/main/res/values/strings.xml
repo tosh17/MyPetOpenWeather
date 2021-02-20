@@ -2,4 +2,41 @@
     <string name="app_name">MyPetOpenWeather</string>
     <string name="feel_like">Ощущается %sС°</string>
     <string name="temperature">%sС°</string>
+    <string name="humidity">%d%%</string>
+
+    <string name="wind_0">Север</string>
+    <string name="wind_22">Северо-северо-восток</string>
+    <string name="wind_45">Северо-восток</string>
+    <string name="wind_67">Востоко-северо-восток</string>
+    <string name="wind_90">Восток</string>
+    <string name="wind_112">Востоко-юго-восток</string>
+    <string name="wind_135">Юго-восток</string>
+    <string name="wind_157">Юго-юго-восток</string>
+    <string name="wind_180">Юг</string>
+    <string name="wind_202">Юго-юго-запад</string>
+    <string name="wind_225">Юго-запад</string>
+    <string name="wind_247">Западо-юго-запад</string>
+    <string name="wind_270">Запад</string>
+    <string name="wind_292">Западо-северо-запад</string>
+    <string name="wind_315">Северо-запад</string>
+    <string name="wind_337">Северо-северо-запад</string>
+
+    <string name="wind_speed_0">Штиль</string>
+    <string name="wind_speed_0_3">Тихий</string>
+    <string name="wind_speed_1_6">Лёгкий</string>
+    <string name="wind_speed_3_4">Слабый</string>
+    <string name="wind_speed_5_5">Умеренный</string>
+    <string name="wind_speed_8_0">Свежий</string>
+    <string name="wind_speed_10_8">Сильный</string>
+    <string name="wind_speed_13_9">Крепкий</string>
+    <string name="wind_speed_17_2">Очень крепкий</string>
+    <string name="wind_speed_20_8">Шторм</string>
+    <string name="wind_speed_24_5">Сильный шторм</string>
+    <string name="wind_speed_28_5">Жестокий шторм</string>
+    <string name="wind_speed_33">Ураган</string>
+    <string name="sity_search_hint">Введите город для поиска</string>
+    <string name="btn_detail">Детально</string>
+    <string name="btn_to_map">На Карту</string>
+
+
 </resources>

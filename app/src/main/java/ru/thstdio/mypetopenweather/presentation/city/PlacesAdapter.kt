@@ -9,6 +9,7 @@ import ru.thstdio.mypetopenweather.R
 import ru.thstdio.mypetopenweather.databinding.HolderPlaceBinding
 import ru.thstdio.mypetopenweather.domain.PlaceWeather
 import ru.thstdio.mypetopenweather.presentation.view.util.calcWeatherColor
+import ru.thstdio.mypetopenweather.presentation.view.util.convertIdWeatherToResId
 
 class PlacesAdapter(private val placeHolderAction: PlaceHolderAction) :
     ListAdapter<PlaceWeather, PlaceHolder>(PlaceDiffUtil()) {
@@ -52,13 +53,17 @@ class PlaceHolder(
         binding.name.text = place.name
         if (weather != null) {
             val temperature = weather.temperature
-            binding.temperatureValue.text = temperature.toString()
+            binding.temperatureValue.text = binding.temperatureValue.context.getString(
+                R.string.temperature,
+                temperature.toString()
+            )
             binding.temperatureValue.setTextColor(
                 calcWeatherColor(
                     temperature,
                     binding.temperatureValue.context
                 )
             )
+            binding.icWeather.setImageResource(convertIdWeatherToResId(weather.iconId))
         } else {
             placeHolderAction.updateWeather(place)
         }

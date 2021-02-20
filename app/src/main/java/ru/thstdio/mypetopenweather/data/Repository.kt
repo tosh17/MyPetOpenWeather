@@ -6,10 +6,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.thstdio.mypetopenweather.data.convertor.toPlace
 import ru.thstdio.mypetopenweather.data.convertor.toWeather
-import ru.thstdio.mypetopenweather.domain.Location
-import ru.thstdio.mypetopenweather.domain.Place
-import ru.thstdio.mypetopenweather.domain.PlaceWeather
-import ru.thstdio.mypetopenweather.domain.Weather
+import ru.thstdio.mypetopenweather.data.convertor.toWeatherWithDate
+import ru.thstdio.mypetopenweather.domain.*
 import ru.thstdio.mypetopenweather.framework.api.service.OpenWeatherApi
 import ru.thstdio.mypetopenweather.framework.room.AppDb
 import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
@@ -70,5 +68,18 @@ class Repository @Inject constructor(
                     .map { entity -> entity.toPlace() }
                     .map { place -> place to getWeatherPredictForPlace(place) }
             }
+    }
+
+    suspend fun getWeatherPredictFiveDay(placeId: Long): Pair<Place, List<WeatherWithDate>> {
+        val response = api.getWeather5DayByCityId(placeId)
+        val place = response.toPlace()
+        val listWeather = response.weathers
+            .map { item -> item.toWeatherWithDate() }
+            .sortedBy { item -> item.date }
+        return place to listWeather
+    }
+
+    suspend fun setPlaceToTop(cityId: Long) {
+        db.placeDao.setPlaceToTop(cityId, System.currentTimeMillis())
     }
 }

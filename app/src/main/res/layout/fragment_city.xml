@@ -31,11 +31,12 @@
         android:inputType="textPersonName"
         android:padding="4dp"
         android:textAlignment="center"
-        android:textSize="20dp"
-        android:hint="Введите город для поиска"
+        android:autofillHints="no"
+        android:hint="@string/sity_search_hint"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
         tools:text="Volgograd" />
 
 
@@ -81,6 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_right"
         app:layout_constraintTop_toTopOf="@+id/edit_text_city"
-        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+        app:srcCompat="@android:drawable/ic_menu_mylocation"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

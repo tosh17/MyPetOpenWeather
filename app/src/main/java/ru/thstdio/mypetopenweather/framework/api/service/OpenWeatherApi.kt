@@ -2,6 +2,7 @@ package ru.thstdio.mypetopenweather.framework.api.service
 
 import retrofit2.http.GET
 import retrofit2.http.Query
+import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictFiveDayRespose
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
 
 
@@ -17,4 +18,8 @@ interface OpenWeatherApi {
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double
     ): WeatherPredictResponse
+
+    @GET("forecast/")
+    suspend fun getWeather5DayByCityId(@Query("id") cityId: Long): WeatherPredictFiveDayRespose
+
 }

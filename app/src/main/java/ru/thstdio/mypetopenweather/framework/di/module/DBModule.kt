@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.thstdio.mypetopenweather.framework.room.AppDb
-import ru.thstdio.mypetopenweather.framework.room.AppDbContract
+import ru.thstdio.mypetopenweather.framework.room.DATABASE_NAME
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +21,7 @@ object DBModule {
     fun providerBd(@ApplicationContext applicationContext: Context): AppDb {
         return Room.databaseBuilder(
             applicationContext,
-            AppDb::class.java, AppDbContract.DATABASE_NAME
+            AppDb::class.java, DATABASE_NAME
         ).setJournalMode(RoomDatabase.JournalMode.AUTOMATIC)
             //.fallbackToDestructiveMigration()
             .build()

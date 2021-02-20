@@ -3,19 +3,18 @@ package ru.thstdio.mypetopenweather.framework.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.thstdio.mypetopenweather.framework.room.AppDbContract
 
-@Entity(tableName = AppDbContract.PlaceEntity.TABLE_NAME)
+@Entity(tableName = "place")
 data class PlaceDBO(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = AppDbContract.PlaceEntity.COLUMN_NAME_ID)
+    @ColumnInfo(name = "id")
     val id: Long,
-    @ColumnInfo(name = AppDbContract.PlaceEntity.COLUMN_NAME_NAME)
+    @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = AppDbContract.PlaceEntity.COLUMN_NAME_LATITUDE)
+    @ColumnInfo(name = "latitude")
     val latitude: Double,
-    @ColumnInfo(name = AppDbContract.PlaceEntity.COLUMN_NAME_LONGITUDE)
+    @ColumnInfo(name = "longitude")
     val longitude: Double,
-    @ColumnInfo(name = AppDbContract.PlaceEntity.COLUMN_NAME_LAST_REQUEST)
+    @ColumnInfo(name = "last_request")
     val lastRequest: Long
 )
