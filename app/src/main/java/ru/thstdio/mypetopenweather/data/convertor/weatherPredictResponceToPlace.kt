@@ -1,7 +1,7 @@
 package ru.thstdio.mypetopenweather.data.convertor
 
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
-import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
 
 fun WeatherPredictResponse.toPlace(): PlaceDBO =
     PlaceDBO(

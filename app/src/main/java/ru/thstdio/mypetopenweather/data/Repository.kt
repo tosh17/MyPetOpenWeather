@@ -1,23 +1,22 @@
 package ru.thstdio.mypetopenweather.data
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import ru.thstdio.core_db.api.data.DbClient
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
 import ru.thstdio.mypetopenweather.data.convertor.toPlace
 import ru.thstdio.mypetopenweather.data.convertor.toWeather
 import ru.thstdio.mypetopenweather.data.convertor.toWeatherWithDate
 import ru.thstdio.mypetopenweather.domain.*
 import ru.thstdio.mypetopenweather.framework.api.service.OpenWeatherApi
-import ru.thstdio.mypetopenweather.framework.room.AppDb
-import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
     private val api: OpenWeatherApi,
-    private val db: AppDb
+    private val db: DbClient
 ) {
 
     //todo или лучше через Atomic

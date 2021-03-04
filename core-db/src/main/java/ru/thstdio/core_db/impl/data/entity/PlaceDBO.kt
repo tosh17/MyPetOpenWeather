@@ -1,4 +1,4 @@
-package ru.thstdio.mypetopenweather.framework.room.entity
+package ru.thstdio.core_db.impl.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

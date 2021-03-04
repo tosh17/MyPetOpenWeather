@@ -1,2 +1,3 @@
+include ':core-db'
 include ':app'
 rootProject.name = "MyPetOpenWeather"

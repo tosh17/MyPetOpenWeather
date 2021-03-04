@@ -1,8 +1,8 @@
-package ru.thstdio.mypetopenweather.framework.room.dao
+package ru.thstdio.core_db.impl.data.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
 
 @Dao
 interface PlaceDao {
