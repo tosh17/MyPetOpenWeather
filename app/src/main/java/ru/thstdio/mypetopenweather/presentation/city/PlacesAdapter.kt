@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.thstdio.mypetopenweather.R
 import ru.thstdio.mypetopenweather.databinding.HolderPlaceBinding
-import ru.thstdio.mypetopenweather.domain.PlaceWeather
+import ru.thstdio.mypetopenweather.domain.PlaceAndWeather
 import ru.thstdio.mypetopenweather.presentation.view.util.calcWeatherColor
 import ru.thstdio.mypetopenweather.presentation.view.util.convertIdWeatherToResId
 
 class PlacesAdapter(private val placeHolderAction: PlaceHolderAction) :
-    ListAdapter<PlaceWeather, PlaceHolder>(PlaceDiffUtil()) {
+    ListAdapter<PlaceAndWeather, PlaceHolder>(PlaceDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.holder_place, parent, false)
@@ -26,15 +26,15 @@ class PlacesAdapter(private val placeHolderAction: PlaceHolderAction) :
     }
 }
 
-class PlaceDiffUtil : DiffUtil.ItemCallback<PlaceWeather>() {
-    override fun areItemsTheSame(oldItem: PlaceWeather, newItem: PlaceWeather): Boolean {
-        val oldPlace = oldItem.first
-        val newPlace = newItem.first
+class PlaceDiffUtil : DiffUtil.ItemCallback<PlaceAndWeather>() {
+    override fun areItemsTheSame(oldItem: PlaceAndWeather, newItem: PlaceAndWeather): Boolean {
+        val oldPlace = oldItem.place
+        val newPlace = newItem.place
         return oldPlace.cityId == newPlace.cityId
     }
 
 
-    override fun areContentsTheSame(oldItem: PlaceWeather, newItem: PlaceWeather): Boolean {
+    override fun areContentsTheSame(oldItem: PlaceAndWeather, newItem: PlaceAndWeather): Boolean {
         val (oldPlace, oldWeather) = oldItem
         val (newPlace, newWeather) = newItem
         return oldPlace == newPlace && oldWeather == newWeather
@@ -48,7 +48,7 @@ class PlaceHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun onBindViewHolder(item: PlaceWeather) {
+    fun onBindViewHolder(item: PlaceAndWeather) {
         val (place, weather) = item
         binding.name.text = place.name
         if (weather != null) {

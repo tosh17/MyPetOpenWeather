@@ -1,54 +1,46 @@
 package ru.thstdio.mypetopenweather.presentation.city
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.thstdio.mypetopenweather.data.convertor.toDomainLocation
 import ru.thstdio.mypetopenweather.domain.Place
-import ru.thstdio.mypetopenweather.domain.PlaceWeather
-import ru.thstdio.mypetopenweather.domain.Weather
+import ru.thstdio.mypetopenweather.domain.PlaceAndWeather
+import ru.thstdio.mypetopenweather.framework.navigation.AppNavigation
+import ru.thstdio.mypetopenweather.presentation.detail.DetailScreen
+import ru.thstdio.mypetopenweather.presentation.map.MapScreen
 import javax.inject.Inject
 
 @HiltViewModel
-class CityViewModel @Inject constructor(private val useCase: CityUseCase) : ViewModel(),
+class CityViewModel @Inject constructor(
+    private val useCase: CityUseCase,
+    private val navigation: AppNavigation
+) : ViewModel(),
     PlaceHolderAction {
 
-    private val _weatherCard: MutableLiveData<Pair<Place, Weather>> = MutableLiveData()
-    val weatherCard: LiveData<Pair<Place, Weather>> get() = _weatherCard
+    private val _weatherCard: MutableLiveData<PlaceAndWeather> = MutableLiveData()
+    val weatherCard: LiveData<PlaceAndWeather> get() = _weatherCard
     var weatherCardWithAnimation = false
         private set
 
     private val _city: MutableLiveData<String> = MutableLiveData()
     val city: LiveData<String> get() = _city
 
-    private val _places: MutableLiveData<List<PlaceWeather>> = MutableLiveData()
-    val places: LiveData<List<PlaceWeather>> get() = _places
+    private val _places: MutableLiveData<List<PlaceAndWeather>> = liveData {
+        useCase.getPlaces().collect { placesFromBd ->
+            emit(placesFromBd)
+            if (weatherCard.value == null && placesFromBd.isNotEmpty()) {
+                updateWeatherCardForPlace(placesFromBd.first().place, false)
+            }
+        }
+    } as MutableLiveData<List<PlaceAndWeather>>
+    val places: LiveData<List<PlaceAndWeather>> get() = _places
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
         Log.e("SearchCityViewModel", exception.toString())
-    }
-
-    init {
-        //todo инит плохо но и
-        //        liveData {
-        //            useCase.getPlaces().collect { placesFromBd -> emit(placesFromBd) }
-        //        }
-        // тоже не могу использовать, так как я подгружаю погоду и записываю ее  liveda и тогда я потеряю связь с базой
-        viewModelScope.launch(exceptionHandler) {
-            useCase.getPlaces().collect { placesFromBd ->
-                Log.e("SearchCityViewModel", "${placesFromBd.size}")
-                _places.value = placesFromBd
-                if (weatherCard.value == null && placesFromBd.isNotEmpty()) {
-                    updateWeatherCardForPlace(placesFromBd.first().first, false)
-                }
-            }
-        }
     }
 
     fun findCityWeather() {
@@ -72,18 +64,16 @@ class CityViewModel @Inject constructor(private val useCase: CityUseCase) : View
     private fun updateWeatherCardForPlace(place: Place, withAnim: Boolean = true) {
         viewModelScope.launch(exceptionHandler) {
             weatherCardWithAnimation = withAnim
-            _weatherCard.value = place to useCase.getWeatherByPlace(place)
+            _weatherCard.value = PlaceAndWeather(place, useCase.getWeatherByPlace(place))
         }
     }
 
     override fun updateWeather(place: Place) {
-        //todo не нравится кусок кода , паджинг не использую
-        // т.к при при повторном поиске того или иного города он перемещается наверх
         viewModelScope.launch(exceptionHandler) {
             val weather = useCase.getWeatherByPlace(place)
             _places.value = _places.value?.map { placeAndWeather ->
-                if (placeAndWeather.first == place) {
-                    place to weather
+                if (placeAndWeather.place == place) {
+                    PlaceAndWeather(place, weather)
                 } else {
                     placeAndWeather
                 }
@@ -95,7 +85,6 @@ class CityViewModel @Inject constructor(private val useCase: CityUseCase) : View
         weatherCardWithAnimation = false
     }
 
-    //todo как лучше конвертировать здесь или уже с фрагмента передавать сконвертированные данные?
     fun updateCurrentLocation(location: android.location.Location) {
         val currentLocation = location.toDomainLocation()
         viewModelScope.launch {
@@ -105,12 +94,12 @@ class CityViewModel @Inject constructor(private val useCase: CityUseCase) : View
     }
 
     fun onClickToMap() {
-        weatherCard.value?.let { (place, _) -> useCase.navigateToMap(place) }
+        weatherCard.value?.let { (place, _) -> navigation.router.navigateTo(MapScreen(place)) }
         weatherCardWithAnimation = false
     }
 
     fun onClickToDetail() {
-        weatherCard.value?.let { (place, _) -> useCase.navigateToDetail(place) }
+        weatherCard.value?.let { (place, _) -> navigation.router.navigateTo(DetailScreen(place)) }
         weatherCardWithAnimation = false
     }
 

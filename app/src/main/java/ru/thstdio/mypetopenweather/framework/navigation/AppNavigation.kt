@@ -3,8 +3,6 @@ package ru.thstdio.mypetopenweather.framework.navigation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
-import com.github.terrakok.cicerone.BackTo
-import com.github.terrakok.cicerone.Command
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -39,7 +37,6 @@ class AppNavigation @Inject constructor(
                     )
                 }
             })
-
     }
 
     fun removeNavigator() {

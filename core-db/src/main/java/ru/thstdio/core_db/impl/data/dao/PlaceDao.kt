@@ -20,4 +20,7 @@ interface PlaceDao {
 
     @Query("UPDATE place set last_request = :lastRequest   where  id = :cityId")
     suspend fun setPlaceToTop(cityId: Long, lastRequest: Long)
+
+    @Query("SELECT * FROM place  where  id = :placeId")
+    suspend fun getPlace(placeId: Long): PlaceDBO
 }

@@ -22,7 +22,7 @@ import ru.thstdio.mypetopenweather.data.convertor.toGoogleMarker
 import ru.thstdio.mypetopenweather.databinding.FragmentMapBinding
 import ru.thstdio.mypetopenweather.domain.Marker
 import ru.thstdio.mypetopenweather.domain.Place
-import ru.thstdio.mypetopenweather.domain.Weather
+import ru.thstdio.mypetopenweather.domain.PlaceAndWeather
 import ru.thstdio.mypetopenweather.presentation.view.util.convertIdWeatherToResId
 
 
@@ -42,7 +42,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
 
-    private val binding: FragmentMapBinding by viewBinding(FragmentMapBinding::bind)
+    private val bindin by viewBinding(FragmentMapBinding::bind)
     private val viewModel: MapViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,9 +52,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap?.let { map ->
-            viewModel.places.observe(this.viewLifecycleOwner, { list -> createMarkers(map,
-                list as List<Pair<Place, Weather>>
-            ) })
+            viewModel.places.observe(this.viewLifecycleOwner, { list ->
+                createMarkers(map, list)
+            })
         }
         arguments?.let { arg ->
             val currentPosition = LatLng(arg.getDouble(PLACE_LAT_ARG), arg.getDouble(PLACE_LON_ARG))
@@ -63,23 +63,21 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     }
 
-    private fun createMarkers(map: GoogleMap, list: List<Pair<Place, Weather>>) {
+    private fun createMarkers(map: GoogleMap, list: List<PlaceAndWeather>) {
         list.forEach { (place, weather) ->
             createMarker(
                 map,
                 Marker(
                     place.location,
                     place.name,
-                    weather.temperature.toString(),
+                    weather!!.temperature.toString(),
                     weather.iconId
                 )
             )
         }
-        list.first().first
     }
 
     private fun createMarker(googleMap: GoogleMap, marker: Marker) {
-
         googleMap.addMarker(
             marker.toGoogleMarker()
                 .icon(createBitmapDescriptor(marker.idWeatherIcon))

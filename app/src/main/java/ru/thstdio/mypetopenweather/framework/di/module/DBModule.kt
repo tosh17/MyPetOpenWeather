@@ -23,7 +23,7 @@ object DBModule {
             applicationContext,
             AppDb::class.java, DATABASE_NAME
         ).setJournalMode(RoomDatabase.JournalMode.AUTOMATIC)
-            //.fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration()
             .build()
     }
 

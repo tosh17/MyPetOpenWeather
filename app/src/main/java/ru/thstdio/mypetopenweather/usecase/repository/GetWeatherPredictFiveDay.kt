@@ -1,11 +1,11 @@
 package ru.thstdio.mypetopenweather.usecase.repository
 
+import kotlinx.coroutines.flow.Flow
 import ru.thstdio.mypetopenweather.data.Repository
-import ru.thstdio.mypetopenweather.domain.Place
-import ru.thstdio.mypetopenweather.domain.WeatherWithDate
+import ru.thstdio.mypetopenweather.domain.PredictForFiveDay
 import javax.inject.Inject
 
 class GetWeatherPredictFiveDay @Inject constructor(private val repository: Repository) {
-    suspend operator fun invoke(placeId: Long): Pair<Place, List<WeatherWithDate>> =
+    suspend operator fun invoke(placeId: Long): Flow<PredictForFiveDay> =
         repository.getWeatherPredictFiveDay(placeId)
 }

@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -32,13 +31,13 @@ class WeatherDiffUtil : DiffUtil.ItemCallback<WeatherHolderItem>() {
     override fun areItemsTheSame(
         oldItem: WeatherHolderItem,
         newItem: WeatherHolderItem
-    ): Boolean = oldItem == newItem
+    ): Boolean = oldItem.weather.date == newItem.weather.date
 
 
     override fun areContentsTheSame(
         oldItem: WeatherHolderItem,
         newItem: WeatherHolderItem
-    ): Boolean = oldItem.weather.date == newItem.weather.date
+    ): Boolean = oldItem == newItem
 
 }
 
@@ -47,23 +46,34 @@ class WeatherHolder(
     private val onClickItem: OnWeatherItemClickListener
 ) :
     RecyclerView.ViewHolder(binding.root) {
+
+    private var _item: WeatherHolderItem? = null
+
+    init {
+        binding.root.setOnClickListener {
+            _item?.let { item ->
+                onClickItem.onClickItem(item)
+            }
+        }
+    }
+
     fun onBindViewHolder(item: WeatherHolderItem) {
-        binding.date.text = item.weather.dateTitle
-        binding.icWeather.setImageResource(convertIdWeatherToResId(item.weather.weather.iconId))
-        binding.tempMax.text = binding.tempMax.context.getString(
-            R.string.temperature,
-            item.weather.weather.tempMax.toString()
-        )
-        binding.tempMin.text = binding.tempMin.context.getString(
-            R.string.temperature,
-            item.weather.weather.tempMin.toString()
-        )
-        binding.root.setOnClickListener { onClickItem.onClickItem(item) }
-        animation(item.isActive)
-        binding.root.background = ContextCompat.getDrawable(
-            binding.root.context,
-            if (item.isActive) R.drawable.shape_active_round_square else R.drawable.shape_round_square
-        )
+        _item = item
+        with(binding) {
+            date.text = item.weather.dateTitle
+            icWeather.setImageResource(convertIdWeatherToResId(item.weather.weather.iconId))
+            tempMax.text = binding.tempMax.context.getString(
+                R.string.temperature,
+                item.weather.weather.tempMax.toString()
+            )
+            tempMin.text = binding.tempMin.context.getString(
+                R.string.temperature,
+                item.weather.weather.tempMin.toString()
+            )
+            animation(item.isActive)
+            root.isSelected = item.isActive
+        }
+
     }
 
     private fun animation(active: Boolean) {

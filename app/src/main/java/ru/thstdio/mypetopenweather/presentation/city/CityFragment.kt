@@ -6,7 +6,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Looper
@@ -16,11 +15,9 @@ import android.view.animation.LinearInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -31,11 +28,10 @@ import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import ru.thstdio.mypetopenweather.R
 import ru.thstdio.mypetopenweather.databinding.FragmentCityBinding
-import ru.thstdio.mypetopenweather.domain.Place
-import ru.thstdio.mypetopenweather.domain.Weather
+import ru.thstdio.mypetopenweather.domain.PlaceAndWeather
+import ru.thstdio.mypetopenweather.presentation.view.util.addItemDecorationWithoutLastDivider
 import ru.thstdio.mypetopenweather.presentation.view.util.calcWeatherColor
 import ru.thstdio.mypetopenweather.presentation.view.util.convertIdWeatherToResId
-
 
 private const val LOCATION_PERMISSION = Manifest.permission.ACCESS_COARSE_LOCATION
 private const val REQUEST_CODE: Int = 1002
@@ -46,7 +42,6 @@ class CityFragment : Fragment(R.layout.fragment_city) {
     companion object {
         fun newInstance() = CityFragment()
     }
-
 
     private val binding: FragmentCityBinding by viewBinding(FragmentCityBinding::bind)
     private val viewModel: CityViewModel by viewModels()
@@ -73,21 +68,12 @@ class CityFragment : Fragment(R.layout.fragment_city) {
     private fun initRecyclerView() {
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        val mDividerItemDecoration = DividerItemDecoration(
-            binding.recyclerView.context,
-            RecyclerView.VERTICAL
-        )
-        mDividerItemDecoration.setDrawable(
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.shape_decorator
-            )!!
-        )
         binding.recyclerView.addItemDecorationWithoutLastDivider()
-        //binding.recyclerView.addItemDecoration(mDividerItemDecoration)
         val adapter = PlacesAdapter(viewModel)
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.animation = null
         viewModel.places.observe(this.viewLifecycleOwner, adapter::submitList)
+
     }
 
     private fun initSearchView() {
@@ -145,36 +131,38 @@ class CityFragment : Fragment(R.layout.fragment_city) {
         )
     }
 
-    private fun updateCurrentWeather(placeAndWeather: Pair<Place, Weather>) {
+    private fun updateCurrentWeather(placeAndWeather: PlaceAndWeather) {
         val (place, weather) = placeAndWeather
-        val colorTemperature = calcWeatherColor(
-            weather.temperature,
-            binding.weatherCard.temperatureValue.context
-        )
-        animationWeatherCard()
-        animationBackGround(colorTemperature)
+        weather?.let { weather ->
+            val colorTemperature = calcWeatherColor(
+                weather.temperature,
+                binding.weatherCard.temperatureValue.context
+            )
+            animationWeatherCard()
+            animationBackGround(colorTemperature)
 
-        binding.root.postDelayed({
-            binding.root.setBackgroundColor(
-                calcWeatherColor(
-                    weather.temperature,
-                    binding.weatherCard.temperatureValue.context
+            binding.root.postDelayed({
+                binding.root.setBackgroundColor(
+                    calcWeatherColor(
+                        weather.temperature,
+                        binding.weatherCard.temperatureValue.context
+                    )
                 )
-            )
-            binding.weatherCard.weatherIcon.setImageResource(convertIdWeatherToResId(weather.iconId))
-            binding.weatherCard.cityValue.text = place.name
-            binding.weatherCard.temperatureValue.text =
-                getString(R.string.temperature, weather.temperature.toString())
-            binding.weatherCard.temperatureValue.setTextColor(
-                calcWeatherColor(
-                    weather.temperature,
-                    binding.weatherCard.temperatureValue.context
+                binding.weatherCard.weatherIcon.setImageResource(convertIdWeatherToResId(weather.iconId))
+                binding.weatherCard.cityValue.text = place.name
+                binding.weatherCard.temperatureValue.text =
+                    getString(R.string.temperature, weather.temperature.toString())
+                binding.weatherCard.temperatureValue.setTextColor(
+                    calcWeatherColor(
+                        weather.temperature,
+                        binding.weatherCard.temperatureValue.context
+                    )
                 )
-            )
-            binding.weatherCard.feelsLike.text =
-                getString(R.string.feel_like, weather.feelsLike.toString())
-        }, getAnimationTime() / 2)
-        viewModel.weatherCardUpdated()
+                binding.weatherCard.feelsLike.text =
+                    getString(R.string.feel_like, weather.feelsLike.toString())
+            }, getAnimationTime() / 2)
+            viewModel.weatherCardUpdated()
+        }
     }
 
     private fun animationWeatherCard() {
@@ -229,25 +217,4 @@ class CityFragment : Fragment(R.layout.fragment_city) {
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.editTextCity.windowToken, 0)
     }
-}
-
-fun RecyclerView.addItemDecorationWithoutLastDivider() {
-
-    if (layoutManager !is LinearLayoutManager)
-        return
-
-    addItemDecoration(object :
-        DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation) {
-
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            if (parent.getChildAdapterPosition(view) == state.itemCount - 1)
-                outRect.setEmpty()
-            super.getItemOffsets(outRect, view, parent, state)
-        }
-    })
 }

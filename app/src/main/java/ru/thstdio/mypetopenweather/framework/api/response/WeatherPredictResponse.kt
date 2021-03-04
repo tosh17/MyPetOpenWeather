@@ -12,7 +12,7 @@ data class WeatherPredictResponse(
     @SerialName("visibility") val visibility: Int,
     @SerialName("wind") val wind: WindResponse,
     @SerialName("clouds") val clouds: CloudsResponse,
-    @SerialName("dt") val dt: Int,
+    @SerialName("dt") val dt: Long,
     @SerialName("sys") val sys: SysResponse,
     @SerialName("timezone") val timezone: Int,
     @SerialName("id") val id: Long,
