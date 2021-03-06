@@ -1,10 +1,8 @@
 package ru.thstdio.mypetopenweather.framework.di.module
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import ru.thstdio.core_network.impl.di.CoreNetworkComponent
@@ -16,7 +14,7 @@ import javax.inject.Singleton
 object ApiModule {
 
     @Provides
-    fun provideDbClient(@ApplicationContext applicationContext: Context): Retrofit {
+    fun provideNetworkClient(): Retrofit {
         return CoreNetworkComponent.get().getHttpClient()
     }
 
