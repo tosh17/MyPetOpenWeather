@@ -3,12 +3,14 @@ package ru.thstdio.mypetopenweather.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import ru.thstdio.core_db.api.data.DbClient
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
+
 import ru.thstdio.mypetopenweather.data.convertor.*
 import ru.thstdio.mypetopenweather.domain.*
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
 import ru.thstdio.mypetopenweather.framework.api.service.OpenWeatherApi
-import ru.thstdio.mypetopenweather.framework.room.AppDb
-import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
+
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,12 +19,12 @@ const val COUNT_PREDICT_FOR_FIVE_DAY = 40
 @Singleton
 class Repository @Inject constructor(
     private val api: OpenWeatherApi,
-    private val db: AppDb
+    private val db: DbClient
 ) {
 
     suspend fun clearOldWeather() {
         val timeLimit = System.currentTimeMillis() / 1000 - hour(2)
-        db.weatherDao.deleteOldWeather(timeLimit)
+        db.weather.deleteOldWeather(timeLimit)
     }
 
     suspend fun getWeatherPredictForCity(city: String): PlaceAndWeather {
@@ -30,18 +32,20 @@ class Repository @Inject constructor(
         return getWeatherFromResponse(response)
     }
 
-    fun getAllPlaced(): Flow<List<Place>> = db.placeDao.getAllAsFlow()
-        .map { places ->
-            places.sortedByDescending(PlaceDBO::lastRequest)
-                .map { entity -> entity.toPlace() }
-        }
+    fun getAllPlaced(): Flow<List<Place>> {
+        return db.place.getAllAsFlow()
+            .map { places ->
+                places.sortedByDescending(PlaceDBO::lastRequest)
+                    .map { entity -> entity.toPlace() }
+            }
+    }
 
     suspend fun getWeatherPredictForPlace(place: Place): Weather {
-        var weatherDBO = db.weatherDao.getWeatherCity(place.cityId)
+        var weatherDBO = db.weather.getWeatherCity(place.cityId)
         if (weatherDBO != null) return weatherDBO.toWeather()
         val response = api.getWeatherByCityId(cityId = place.cityId)
         weatherDBO = response.toWeatherDBO(isHourly = false)
-        db.weatherDao.insert(weatherDBO)
+        db.weather.insert(weatherDBO)
         return weatherDBO.toWeather()
     }
 
@@ -51,7 +55,7 @@ class Repository @Inject constructor(
     }
 
     suspend fun getAllPlacedWithLoadedWeather(): Flow<List<PlaceAndWeather>> {
-        return db.placeDao.getAllAsFlow()
+        return db.place.getAllAsFlow()
             .map { places ->
                 places.sortedByDescending(PlaceDBO::lastRequest)
                     .map { entity -> entity.toPlace() }
@@ -65,7 +69,7 @@ class Repository @Inject constructor(
     }
 
     suspend fun getWeatherPredictFiveDay(placeId: Long): Flow<PredictForFiveDay> = flow {
-        var listWeatherDBO = db.weatherDao.getListWeatherCity(placeId)
+        var listWeatherDBO = db.weather.getListWeatherCity(placeId)
 
         val getFromApi: suspend () -> Unit = {
             val response = api.getWeather5DayByCityId(placeId)
@@ -73,12 +77,12 @@ class Repository @Inject constructor(
             listWeatherDBO = response.weathers
                 .map { item -> item.toWeatherDBO(place.cityId, isHourly = true) }
                 .sortedBy { item -> item.time }
-            db.weatherDao.insert(listWeatherDBO)
+            db.weather.insert(listWeatherDBO)
             val listWeather = listWeatherDBO.map { item -> item.toWeatherWithDate() }
             emit(PredictForFiveDay(place, listWeather))
         }
         val getFromDb: suspend () -> Unit = {
-            val place = db.placeDao.getPlace(placeId).toPlace()
+            val place = db.place.getPlace(placeId).toPlace()
             val listWeather = listWeatherDBO.map { item -> item.toWeatherWithDate() }
             emit(PredictForFiveDay(place, listWeather))
         }
@@ -97,15 +101,15 @@ class Repository @Inject constructor(
     }
 
     suspend fun setPlaceToTop(cityId: Long) {
-        db.placeDao.setPlaceToTop(cityId, System.currentTimeMillis())
+        db.place.setPlaceToTop(cityId, System.currentTimeMillis())
     }
 
 
     private suspend fun getWeatherFromResponse(response: WeatherPredictResponse): PlaceAndWeather {
         val placeDBO = response.toPlaceDBO()
-        db.placeDao.insert(placeDBO)
+        db.place.insert(placeDBO)
         val weatherDBO = response.toWeatherDBO(false)
-        db.weatherDao.insert(weatherDBO)
+        db.weather.insert(weatherDBO)
         val place = placeDBO.toPlace()
         val weather = weatherDBO.toWeather()
         return PlaceAndWeather(place, weather)

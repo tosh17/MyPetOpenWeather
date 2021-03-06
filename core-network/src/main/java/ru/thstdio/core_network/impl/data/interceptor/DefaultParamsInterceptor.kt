@@ -1,4 +1,4 @@
-package ru.thstdio.mypetopenweather.framework.api.interceptor
+package ru.thstdio.core_network.impl.data.interceptor
 
 import okhttp3.HttpUrl
 import okhttp3.Interceptor

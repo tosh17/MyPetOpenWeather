@@ -30,12 +30,18 @@ class CityViewModel @Inject constructor(
     val city: LiveData<String> get() = _city
 
     private val _places: MutableLiveData<List<PlaceAndWeather>> = liveData {
-        useCase.getPlaces().collect { placesFromBd ->
-            emit(placesFromBd)
-            if (weatherCard.value == null && placesFromBd.isNotEmpty()) {
-                updateWeatherCardForPlace(placesFromBd.first().place, false)
+        try {
+
+            useCase.getPlaces().collect { placesFromBd ->
+                emit(placesFromBd)
+                if (weatherCard.value == null && placesFromBd.isNotEmpty()) {
+                    updateWeatherCardForPlace(placesFromBd.first().place, false)
+                }
             }
+        } catch (e: Exception) {
+            Log.e("SearchCityViewModel", e.toString())
         }
+
     } as MutableLiveData<List<PlaceAndWeather>>
     val places: LiveData<List<PlaceAndWeather>> get() = _places
 

@@ -3,12 +3,13 @@ package ru.thstdio.mypetopenweather.data.convertor
 import android.annotation.SuppressLint
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
 import ru.thstdio.mypetopenweather.domain.*
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictFiveDayItem
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictFiveDayRespose
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
-import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
 import ru.thstdio.mypetopenweather.framework.room.entity.WeatherDBO
+
 import kotlin.math.roundToInt
 
 fun android.location.Location.toDomainLocation(): Location {

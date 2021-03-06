@@ -2,9 +2,9 @@ package ru.thstdio.mypetopenweather.framework.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.thstdio.mypetopenweather.framework.room.dao.PlaceDao
+import ru.thstdio.core_db.impl.data.dao.PlaceDao
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
 import ru.thstdio.mypetopenweather.framework.room.dao.WeatherDao
-import ru.thstdio.mypetopenweather.framework.room.entity.PlaceDBO
 import ru.thstdio.mypetopenweather.framework.room.entity.WeatherDBO
 
 const val DATABASE_VERSION = 1
