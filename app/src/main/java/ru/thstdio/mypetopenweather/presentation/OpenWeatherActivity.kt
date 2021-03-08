@@ -6,9 +6,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import ru.thstdio.core.navigation.Features
 import ru.thstdio.mypetopenweather.R
 import ru.thstdio.mypetopenweather.framework.navigation.AppNavigation
-import ru.thstdio.mypetopenweather.presentation.city.CityScreen
 import ru.thstdio.mypetopenweather.usecase.repository.ClearOldWeather
 import javax.inject.Inject
 
@@ -23,7 +23,8 @@ class OpenWeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_weather)
         if (savedInstanceState == null) {
-            appNavigator.router.newRootScreen(CityScreen())
+            // appNavigator.router.newRootScreen(CityScreen())
+            appNavigator.openFeature(Features.Cities)
             CoroutineScope(SupervisorJob()).launch {
                 clearOldWeatherUseCase()
             }
@@ -41,6 +42,6 @@ class OpenWeatherActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        appNavigator.router.exit()
+        appNavigator.onBack()
     }
 }

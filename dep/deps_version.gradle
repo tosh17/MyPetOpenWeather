@@ -1,0 +1,41 @@
+ext.versions = [
+        viewbinding                    : "1.4.4",
+        coroutines                     : "1.4.3",
+        okhttp                         : "4.9.0",
+        retrofit                       : "2.9.0",
+        kotlinx_serialization_json     : "1.1.0",
+        kotlinx_serialization_convertor: "0.8.0",
+        cicerone                       : "6.6",
+        dagger                          : "2.33",
+        hilt                           : '2.33-beta',
+        room                           : "2.3.0-beta02",
+]
+ext.view_binding = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$versions.viewbinding"
+ext.coroutines = [
+        core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines",
+        android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+]
+
+ext.http = [
+        okhttp                 : "com.squareup.okhttp3:okhttp:$versions.okhttp",
+        retrofit               : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+        logging_interceptor    : "com.squareup.okhttp3:logging-interceptor:$versions.okhttp",
+        serialization_json     : "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.kotlinx_serialization_json",
+        serialization_converter: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.kotlinx_serialization_convertor"
+]
+ext.di = [
+        dagger     : "com.google.dagger:dagger:$versions.dagger",
+        dagger_kapt: "com.google.dagger:dagger-compiler:$versions.dagger",
+        hilt       : "com.google.dagger:hilt-android:$versions.hilt",
+        hilt_kapt  : "com.google.dagger:hilt-android-compiler:$versions.hilt"
+]
+ext.cicerone = "com.github.terrakok:cicerone:$versions.cicerone"
+ext.room = [
+        runtime     : "androidx.room:room-runtime:$versions.room",
+        kapt: "androidx.room:room-compiler:$versions.room",
+        ktx : "androidx.room:room-ktx:$versions.room"
+]
+ext.play_services = [
+        location: 'com.google.android.gms:play-services-location:18.0.0',
+        maps    : 'com.google.android.gms:play-services-maps:17.0.0'
+]

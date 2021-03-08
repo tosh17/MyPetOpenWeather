@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import ru.thstdio.core.domain.Place
 import ru.thstdio.mypetopenweather.R
 import ru.thstdio.mypetopenweather.databinding.FragmentDetailBinding
-import ru.thstdio.mypetopenweather.domain.Place
 import ru.thstdio.mypetopenweather.presentation.view.util.convertIdWeatherToResId
 import ru.thstdio.mypetopenweather.presentation.view.util.winSpeedToResId
 import ru.thstdio.mypetopenweather.presentation.view.util.windDirectionToResId

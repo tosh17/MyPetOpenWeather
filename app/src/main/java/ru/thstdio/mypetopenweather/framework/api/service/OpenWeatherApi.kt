@@ -5,6 +5,7 @@ import retrofit2.http.Query
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictFiveDayRespose
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
 
+
 interface OpenWeatherApi {
     @GET("weather/")
     suspend fun getWeatherByCityName(@Query("q") city: String): WeatherPredictResponse

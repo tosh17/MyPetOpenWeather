@@ -11,6 +11,7 @@ import ru.thstdio.mypetopenweather.domain.*
 import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictResponse
 import ru.thstdio.mypetopenweather.framework.api.service.OpenWeatherApi
 
+
 import javax.inject.Inject
 import javax.inject.Singleton
 

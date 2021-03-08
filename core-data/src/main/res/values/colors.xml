@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="cold">#1A237E</color>
+    <color name="cool">#2196F3</color>
+    <color name="warm">#66F600</color>
+    <color name="hot">#F60000</color>
+    <color name="btn_action">#304FFE</color>
+    <color name="btn_text">#FFFFFFFF</color>
+
+    <color name="weather_holder_background_active">#6490FF</color>
+    <color name="weather_holder_background_default">#FFFFFFFF</color>
+</resources>

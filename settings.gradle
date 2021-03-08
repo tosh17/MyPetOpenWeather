@@ -1,3 +1,7 @@
+include ':core-ui-util'
+include ':core-data'
+include ':module-injector'
+include ':feature-cities'
 include ':core-network'
 include ':core-db'
 include ':app'

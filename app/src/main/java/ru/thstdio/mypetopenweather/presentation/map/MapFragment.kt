@@ -17,11 +17,11 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
+import ru.thstdio.core.domain.Place
 import ru.thstdio.mypetopenweather.R
 import ru.thstdio.mypetopenweather.data.convertor.toGoogleMarker
 import ru.thstdio.mypetopenweather.databinding.FragmentMapBinding
 import ru.thstdio.mypetopenweather.domain.Marker
-import ru.thstdio.mypetopenweather.domain.Place
 import ru.thstdio.mypetopenweather.domain.PlaceAndWeather
 import ru.thstdio.mypetopenweather.presentation.view.util.convertIdWeatherToResId
 
