@@ -42,6 +42,7 @@ apply from: "$project.rootDir/dep/deps_version.gradle"
 dependencies {
     implementation(project(":module-injector"))
     implementation(project(":core-data"))
+    implementation(project(":core-resourse"))
     implementation(project(":core-db"))
     implementation(project(":core-network"))
     implementation(project(":core-ui-util"))
@@ -63,8 +64,6 @@ dependencies {
     //DI
     implementation di.dagger
     kapt di.dagger_kapt
-    //Cicerone
-    implementation cicerone
 
     implementation play_services.location
 

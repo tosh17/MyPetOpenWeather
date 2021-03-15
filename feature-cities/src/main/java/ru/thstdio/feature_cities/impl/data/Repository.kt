@@ -1,8 +1,8 @@
 package ru.thstdio.feature_cities.impl.data
 
-import com.example.core.di.general.PerFeature
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ru.thstdio.core.di.PerFeature
 import ru.thstdio.core.domain.Location
 import ru.thstdio.core.domain.Place
 import ru.thstdio.core.domain.PlaceAndWeather

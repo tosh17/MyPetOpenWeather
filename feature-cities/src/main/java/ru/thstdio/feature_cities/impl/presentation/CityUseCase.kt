@@ -1,6 +1,6 @@
 package ru.thstdio.feature_cities.impl.presentation
 
-import ru.thstdio.feature_cities.impl.usecse.*
+import ru.thstdio.feature_cities.impl.usecase.*
 import javax.inject.Inject
 
 class CityUseCase @Inject constructor(

@@ -42,11 +42,14 @@ dependencies {
     implementation(project(":module-injector"))
 
     implementation(project(":core-data"))
+    implementation(project(":core-resourse"))
     implementation(project(":core-ui-util"))
     implementation(project(":core-db"))
     implementation(project(":core-network"))
 
     implementation(project(":feature-cities"))
+    implementation(project(":feature-map"))
+    implementation(project(":feature-detail"))
 
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'

@@ -1,3 +1,6 @@
+include ':feature-detail'
+include ':feature-map'
+include ':core-resourse'
 include ':core-ui-util'
 include ':core-data'
 include ':module-injector'

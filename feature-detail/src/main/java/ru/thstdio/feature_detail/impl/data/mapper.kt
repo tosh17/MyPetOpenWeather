@@ -1,0 +1,81 @@
+package ru.thstdio.feature_detail.impl.data
+
+import android.annotation.SuppressLint
+import ru.thstdio.core.domain.Location
+import ru.thstdio.core.domain.Place
+import ru.thstdio.core.domain.Weather
+import ru.thstdio.core.domain.WeatherWithDate
+import ru.thstdio.core_db.impl.data.entity.PlaceDBO
+import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictFiveDayItem
+import ru.thstdio.mypetopenweather.framework.api.response.WeatherPredictFiveDayRespose
+import ru.thstdio.mypetopenweather.framework.room.entity.WeatherDBO
+import kotlin.math.roundToInt
+
+
+fun PlaceDBO.toPlace(): Place {
+    return Place(
+        cityId = this.id,
+        name = this.name,
+        location = Location(
+            latitude = this.latitude,
+            longitude = this.longitude
+        )
+    )
+}
+
+fun WeatherPredictFiveDayItem.toWeatherDBO(cityId: Long, isHourly: Boolean): WeatherDBO {
+    return WeatherDBO(
+        cityId = cityId,
+        time = this.dateTime,
+        isHourly = isHourly,
+        temperature = this.main.temp.roundToInt(),
+        feelsLike = this.main.feelsLike.roundToInt(),
+        iconId = this.weather.firstOrNull()?.id ?: 0,
+        tempMax = this.main.tempMax.roundToInt(),
+        tempMin = this.main.tempMin.roundToInt(),
+        humidity = this.main.humidity,
+        pressure = this.main.pressure,
+        windSpeed = this.wind.speed,
+        wendDeg = this.wind.deg
+    )
+}
+
+fun WeatherPredictFiveDayRespose.toPlace(): Place {
+    return Place(
+        name = this.city.name,
+        cityId = this.city.id,
+        location = Location(
+            latitude = this.city.coord.lat,
+            longitude = this.city.coord.lon
+        )
+    )
+}
+
+fun WeatherDBO.toWeather(): Weather {
+    return Weather(
+        temperature = this.temperature,
+        feelsLike = this.feelsLike,
+        iconId = this.iconId,
+        tempMax = this.tempMax,
+        tempMin = this.tempMin,
+        humidity = this.humidity,
+        pressure = this.pressure,
+        windSpeed = this.windSpeed,
+        wendDeg = this.wendDeg
+    )
+}
+
+fun WeatherDBO.toWeatherWithDate(): WeatherWithDate {
+    return WeatherWithDate(
+        date = this.time,
+        dateTitle = convertDate(this.time),
+        weather = this.toWeather()
+    )
+}
+
+@SuppressLint("SimpleDateFormat")
+private fun convertDate(time: Long): String {
+    val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")
+    val date = java.util.Date(time * 1000)
+    return sdf.format(date)
+}

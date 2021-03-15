@@ -2,7 +2,6 @@ package ru.thstdio.feature_cities.impl.presentation
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,7 +14,7 @@ import ru.thstdio.feature_cities.impl.data.convertor.toDomainLocation
 
 class CityViewModel(
     private val useCase: CityUseCase,
-    private val navigation: AppRouter<Router>
+    private val navigation: AppRouter
 ) : ViewModel(), PlaceHolderAction {
 
     private val _weatherCard: MutableLiveData<PlaceAndWeather> = MutableLiveData()
