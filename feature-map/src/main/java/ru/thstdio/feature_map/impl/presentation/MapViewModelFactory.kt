@@ -2,8 +2,8 @@ package ru.thstdio.feature_map.impl.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ru.thstdio.core.di.PerFeature
 import ru.thstdio.core.navigation.AppRouter
+import ru.thstdio.module_injector.di.PerFeature
 import javax.inject.Inject
 
 

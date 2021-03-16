@@ -1,9 +1,9 @@
 package ru.thstdio.feature_map.impl.framework.di
 
 import dagger.Component
-import ru.thstdio.core.di.PerFeature
 import ru.thstdio.feature_map.api.MapFeatureApi
 import ru.thstdio.feature_map.impl.presentation.MapFragment
+import ru.thstdio.module_injector.di.PerFeature
 
 @Component(
     modules = [MapFeatureModule::class, ApiModule::class],

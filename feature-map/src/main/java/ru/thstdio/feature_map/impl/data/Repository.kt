@@ -3,13 +3,13 @@ package ru.thstdio.feature_map.impl.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.thstdio.core.di.PerFeature
 import ru.thstdio.core.domain.Place
 import ru.thstdio.core.domain.PlaceAndWeather
 import ru.thstdio.core.domain.Weather
 import ru.thstdio.core_db.api.data.DbClient
 import ru.thstdio.core_db.impl.data.entity.PlaceDBO
 import ru.thstdio.feature_map.impl.framework.api.OpenWeatherApi
+import ru.thstdio.module_injector.di.PerFeature
 import javax.inject.Inject
 
 

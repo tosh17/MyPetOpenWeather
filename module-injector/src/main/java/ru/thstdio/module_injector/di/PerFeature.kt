@@ -1,4 +1,4 @@
-package ru.thstdio.core.di
+package ru.thstdio.module_injector.di
 
 import javax.inject.Scope
 

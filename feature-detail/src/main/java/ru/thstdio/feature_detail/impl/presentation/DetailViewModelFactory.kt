@@ -2,7 +2,7 @@ package ru.thstdio.feature_detail.impl.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ru.thstdio.core.di.PerFeature
+import ru.thstdio.module_injector.di.PerFeature
 import javax.inject.Inject
 
 @PerFeature

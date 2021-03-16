@@ -5,8 +5,6 @@ import ru.thstdio.core_db.api.data.DbClient
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val COUNT_PREDICT_FOR_FIVE_DAY = 40
-
 @Singleton
 class Repository @Inject constructor(
     private val db: DbClient

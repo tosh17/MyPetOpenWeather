@@ -3,10 +3,10 @@ package ru.thstdio.feature_detail.impl.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.thstdio.core.di.PerFeature
 import ru.thstdio.core.domain.PredictForFiveDay
 import ru.thstdio.core_db.api.data.DbClient
 import ru.thstdio.feature_detail.impl.framework.api.OpenWeatherApi
+import ru.thstdio.module_injector.di.PerFeature
 import javax.inject.Inject
 
 const val COUNT_PREDICT_FOR_FIVE_DAY = 40

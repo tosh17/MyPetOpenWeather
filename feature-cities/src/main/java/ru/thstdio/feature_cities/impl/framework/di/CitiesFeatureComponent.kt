@@ -1,9 +1,9 @@
 package ru.thstdio.feature_cities.impl.framework.di
 
 import dagger.Component
-import ru.thstdio.core.di.PerFeature
 import ru.thstdio.feature_cities.api.CitiesFeatureApi
 import ru.thstdio.feature_cities.impl.presentation.CityFragment
+import ru.thstdio.module_injector.di.PerFeature
 
 @Component(
     modules = [CitiesFeatureModule::class, ApiModule::class],
