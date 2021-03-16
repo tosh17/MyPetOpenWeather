@@ -2,15 +2,14 @@ package ru.thstdio.feature_cities.impl.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.core.di.general.PerFeature
-import com.github.terrakok.cicerone.Router
 import ru.thstdio.core.navigation.AppRouter
+import ru.thstdio.module_injector.di.PerFeature
 import javax.inject.Inject
 
 @PerFeature
 class CityViewModelFactory @Inject constructor(
     private val useCase: CityUseCase,
-    private val navigation: AppRouter<Router>
+    private val navigation: AppRouter
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

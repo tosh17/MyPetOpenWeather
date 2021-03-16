@@ -6,12 +6,13 @@ import androidx.fragment.app.FragmentTransaction
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.thstdio.core.navigation.AppRouter
 import ru.thstdio.core.navigation.Features
 import ru.thstdio.feature_cities.api.CitiesFeatureApi
+import ru.thstdio.feature_detail.api.DetailFeatureApi
+import ru.thstdio.feature_map.api.MapFeatureApi
 import ru.thstdio.mypetopenweather.R
-import ru.thstdio.mypetopenweather.presentation.detail.DetailScreen
-import ru.thstdio.mypetopenweather.presentation.map.MapScreen
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -20,8 +21,10 @@ import javax.inject.Singleton
 class AppNavigation @Inject constructor(
     private val router: Router,
     private val navigatorHolder: NavigatorHolder,
-    private val featureCities: Provider<CitiesFeatureApi>
-) : AppRouter<Router> {
+    private val featureCities: Provider<CitiesFeatureApi>,
+    private val featureMap: Provider<MapFeatureApi>,
+    private val featureDetail: Provider<DetailFeatureApi>
+) : AppRouter {
     fun setNavigator(activity: FragmentActivity, containerId: Int) {
         navigatorHolder.setNavigator(
             object : AppNavigator(activity, containerId) {
@@ -51,15 +54,17 @@ class AppNavigation @Inject constructor(
     }
 
     override fun openFeature(feature: Features) {
-        when (feature) {
-            Features.Cities -> featureCities.get().citiesStarter().start(this)
-            is Features.Detail -> router.navigateTo(DetailScreen(feature.place))
-            is Features.Map -> router.navigateTo(MapScreen(feature.place))
-        }
-    }
-
-    override fun getRouter(): Router {
-        return router
+        router.navigateTo(
+            FragmentScreen(fragmentCreator = {
+                when (feature) {
+                    Features.Cities ->
+                        featureCities.get().citiesStarter().getStartScreen()
+                    is Features.Detail -> featureDetail.get().detailStarter()
+                        .getStartScreen(feature.place)
+                    is Features.Map -> featureMap.get().mapStarter().getStartScreen(feature.place)
+                }
+            })
+        )
     }
 
     override fun onBack() {

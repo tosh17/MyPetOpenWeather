@@ -1,6 +1,5 @@
 package ru.thstdio.feature_cities.impl.data
 
-import com.example.core.di.general.PerFeature
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.thstdio.core.domain.Location
@@ -15,6 +14,7 @@ import ru.thstdio.feature_cities.impl.data.convertor.toWeather
 import ru.thstdio.feature_cities.impl.data.convertor.toWeatherDBO
 import ru.thstdio.feature_cities.impl.framework.api.OpenWeatherApi
 import ru.thstdio.feature_cities.impl.framework.api.response.WeatherPredictResponse
+import ru.thstdio.module_injector.di.PerFeature
 import javax.inject.Inject
 
 @PerFeature

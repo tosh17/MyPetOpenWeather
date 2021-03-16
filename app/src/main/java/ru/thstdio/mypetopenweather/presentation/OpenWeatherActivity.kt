@@ -23,7 +23,6 @@ class OpenWeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_weather)
         if (savedInstanceState == null) {
-            // appNavigator.router.newRootScreen(CityScreen())
             appNavigator.openFeature(Features.Cities)
             CoroutineScope(SupervisorJob()).launch {
                 clearOldWeatherUseCase()
